@@ -3,8 +3,10 @@ package ru.otus.spring.vshum.parser;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.otus.spring.vshum.constant.HeadersConstant;
+import ru.otus.spring.vshum.service.interfaces.LocaleFileService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,13 +17,33 @@ import java.util.List;
 @Component
 public class CSVParserOptionsImpl implements CSVParserOptions {
 
+    private final LocaleFileService localeFileService;
+
     private Reader reader;
     private CSVFormat csvFormatForTest;
+    private final String filePath;
 
-    public List<CSVRecord> getRecords(String testPath) {
+    public CSVParserOptionsImpl(LocaleFileService localeFileService,
+                                @Value("${csv.path}") String filePath) {
+        this.localeFileService = localeFileService;
+        this.filePath = filePath;
+    }
 
-        InputStream inputStream = getResourceStream(testPath);
-        reader = new InputStreamReader(getResourceStream(testPath));
+    @Override
+    public List<CSVRecord> getRecordsWithLocale(){
+        String filePathWithLocale = localeFileService.getFilePathWithLocale(filePath);
+
+        return getRecords(filePathWithLocale);
+    }
+
+    @Override
+    public List<CSVRecord> getOriginalRecords() {
+        return getRecords(filePath);
+    }
+
+    private List<CSVRecord> getRecords(String filePath) {
+
+        reader = new InputStreamReader(getResourceStream(filePath));
         csvFormatForTest = getCSVFormat();
 
         List<CSVRecord> records = null;

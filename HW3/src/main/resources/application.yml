@@ -1,0 +1,10 @@
+spring:
+  messages:
+    basename: "i18n/appmessages"
+    encoding: "UTF-8"
+
+csv.path: "/test_.csv"
+correctAnswersToPassCount: 3
+
+application:
+  locale: ru_RU
