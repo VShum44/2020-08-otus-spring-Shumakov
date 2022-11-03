@@ -17,6 +17,10 @@ public class Author {
         this.surname = surname;
     }
 
+    public Author(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

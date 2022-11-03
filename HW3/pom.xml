@@ -9,7 +9,7 @@
         <relativePath/>
     </parent>
     <groupId>ru.otus.vshum</groupId>
-    <artifactId>Spring-HW</artifactId>
+    <artifactId>HW3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>HW3</name>
     <description>HW3</description>

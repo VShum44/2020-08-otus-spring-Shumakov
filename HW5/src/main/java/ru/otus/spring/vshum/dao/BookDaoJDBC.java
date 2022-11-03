@@ -1,12 +1,17 @@
 package ru.otus.spring.vshum.dao;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
+import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.dao.interfaces.BookDao;
+import ru.otus.spring.vshum.domain.Author;
 import ru.otus.spring.vshum.domain.Book;
+import ru.otus.spring.vshum.domain.Genre;
+import ru.otus.spring.vshum.wrapper.BookWrapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,12 +42,22 @@ public class BookDaoJDBC implements BookDao {
 
     @Override
     public int add(Book book) {
-        Map<String, Object> params = Map.of("title", book.getTitle(),
-                                            "authorId", book.getAuthorId(),
-                                            "genreId", book.getGenreId());
+        Integer authorId = book.getAuthor().getId();
+        Integer genreId = book.getGenre().getId();
 
-        return namedJdbcOperations.update("insert into books (title, author_id, genre_id)" +
-                        "               values (:title, :authorId, :genreId)", params);
+        if(authorId == null || genreId == null) return AppConst.FAIL;
+
+        try {
+            Map<String, Object> params = Map.of("title", book.getTitle(),
+                    "authorId", authorId,
+                    "genreId", genreId);
+
+            return namedJdbcOperations.update("insert into books (title, author_id, genre_id)" +
+                    "               values (:title, :authorId, :genreId)", params);
+        }catch (DataIntegrityViolationException e){
+            System.out.println(String.format("Author id: %d or Genre id: %d doesn't exist", authorId, genreId));
+            return AppConst.FAIL;
+        }
     }
 
     @Override
@@ -51,10 +66,19 @@ public class BookDaoJDBC implements BookDao {
 
         try {
             book = namedJdbcOperations.queryForObject(
-                    "select id, title, author_id, genre_id " +
-                        "from books " +
-                        "where id = :id",
-                         Map.of("id", id), new BookMapper()
+                    "select b.id as b_id," +
+                            " b.title," +
+                            " b.author_id," +
+                            " ath.name, " +
+                            " ath.patronymic," +
+                            " ath.surname, " +
+                            " b.genre_id, " +
+                            " gen.title as g_title " +
+                            "from books b " +
+                            "inner join authors ath on b.author_id = ath.id " +
+                            "inner join genres gen on b.genre_id = gen.id " +
+                            "where b.id = :id",
+                    Map.of("id", id), new BookMapper()
             );
             return Optional.ofNullable(book);
 
@@ -65,7 +89,18 @@ public class BookDaoJDBC implements BookDao {
 
     @Override
     public List<Book> getAll() {
-        return jdbcOperations.query("select id, title, author_id, genre_id from books", new BookMapper());
+        return jdbcOperations.query(
+                "select b.id as b_id," +
+                        " b.title," +
+                        " b.author_id," +
+                        " ath.name, " +
+                        " ath.patronymic," +
+                        " ath.surname, " +
+                        " b.genre_id, " +
+                        " gen.title as g_title " +
+                        "from books b " +
+                        "inner join authors ath on b.author_id = ath.id " +
+                        "inner join genres gen on b.genre_id = gen.id ", new BookMapper());
     }
 
     @Override
@@ -75,16 +110,36 @@ public class BookDaoJDBC implements BookDao {
 
     @Override
     public List<Book> getAllAuthorBooks(int authorId) {
-        return namedJdbcOperations.query("select id, title, author_id, genre_id " +
-                                             "from books " +
+        return namedJdbcOperations.query(
+                    " select b.id as b_id, " +
+                        " b.title," +
+                        " b.author_id, " +
+                        " ath.name, " +
+                        " ath.patronymic, " +
+                        " ath.surname, " +
+                        " b.genre_id, " +
+                        " gen.title as g_title " +
+                        "from books b " +
+                        "inner join authors ath on b.author_id = ath.id " +
+                        "inner join genres gen on b.genre_id = gen.id " +
                                              "where author_id = :authorId",
                                               Map.of("authorId", authorId), new BookMapper());
     }
 
     @Override
     public List<Book> getAllBooksInCurrentGenre(int genreId) {
-        return namedJdbcOperations.query("select id, title, author_id, genre_id " +
-                                             "from books " +
+        return namedJdbcOperations.query(
+                                         " select b.id as b_id, " +
+                                                 " b.title," +
+                                                 " b.author_id, " +
+                                                 " ath.name, " +
+                                                 " ath.patronymic, " +
+                                                 " ath.surname, " +
+                                                 " b.genre_id, " +
+                                                 " gen.title as g_title " +
+                                                 "from books b " +
+                                                 "inner join authors ath on b.author_id = ath.id " +
+                                                 "inner join genres gen on b.genre_id = gen.id " +
                                              "where genre_id = :genreId",
                                               Map.of("genreId", genreId), new BookMapper());
     }
@@ -93,11 +148,22 @@ public class BookDaoJDBC implements BookDao {
 
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
-            long id = rs.getLong("id");
+            long id = rs.getLong("b_id");
             String title = rs.getString("title");
+
             int authorId = rs.getInt("author_id");
+            String authorName = rs.getString("name");
+            String patronymic = rs.getString("patronymic");
+            String surname = rs.getString("surname");
+
             int genreId = rs.getInt("genre_id");
-            return new Book(id, title, authorId, genreId);
+            String genreTitle = rs.getString("g_title");
+
+            return new Book(
+                    id, title,
+                    new Author(authorId, authorName, patronymic, surname),
+                    new Genre(genreId, genreTitle)
+            );
         }
     }
 }

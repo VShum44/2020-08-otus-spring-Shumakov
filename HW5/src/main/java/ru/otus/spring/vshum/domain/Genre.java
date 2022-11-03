@@ -11,6 +11,10 @@ public class Genre {
         this.title = title;
     }
 
+    public Genre(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

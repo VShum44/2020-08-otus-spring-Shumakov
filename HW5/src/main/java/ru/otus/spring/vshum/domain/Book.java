@@ -6,21 +6,24 @@ public class Book {
 
     private String title;
 
-    private int authorId;
+    private  Author author;
 
-    private int genreId;
+    private Genre genre;
 
-    public Book(long id, String title, int authorId, int genreId) {
-        this.id = id;
-        this.title = title;
-        this.authorId = authorId;
-        this.genreId = genreId;
+    public Book() {
     }
 
-    public Book(String title, int authorId, int genreId) {
+    public Book(long id, String title, Author author, Genre genre) {
+        this.id = id;
         this.title = title;
-        this.authorId = authorId;
-        this.genreId = genreId;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Book(String title,  Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
     }
 
     public long getId() {
@@ -39,20 +42,28 @@ public class Book {
         this.title = title;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public int getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id = " + id +
+                ", title:'" + title + '\'' +
+                ", author = id: " + author.getId() + ", name: " + author.getName() + " " + author.getSurname() +
+                ", genre = id: " + genre.getId() + " - " + genre.getTitle() + "}\n";
+    }
 }

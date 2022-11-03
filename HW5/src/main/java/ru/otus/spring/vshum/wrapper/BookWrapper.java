@@ -1,34 +1,20 @@
 package ru.otus.spring.vshum.wrapper;
 
-import ru.otus.spring.vshum.domain.Author;
-import ru.otus.spring.vshum.domain.Genre;
-
 public class BookWrapper {
-
-    private long id;
 
     private String title;
 
-    private Author author;
+    private int authorId;
 
-    private Genre genre;
+    private int genreId;
 
     public BookWrapper() {
     }
 
-    public BookWrapper(long id, String title, Author author, Genre genre) {
-        this.id = id;
+    public BookWrapper(String title, int authorId, int genreId) {
         this.title = title;
-        this.author = author;
-        this.genre = genre;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        this.authorId = authorId;
+        this.genreId = genreId;
     }
 
     public String getTitle() {
@@ -39,28 +25,19 @@ public class BookWrapper {
         this.title = title;
     }
 
-    public Author getAuthor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
-    @Override
-    public String toString() {
-        return "Book: " +
-                "id = " + id +
-                ", title = '" + title + '\'' +
-                ", author = " + author.getName() + " " + author.getSurname() +
-                ", genre = " + genre.getTitle();
+    public void setGenreId(int genreId) {
+        this.genreId = genreId;
     }
 }

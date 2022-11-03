@@ -9,17 +9,15 @@ public interface BookService {
 
     Book getOneById(long id);
 
-    BookWrapper getBookWrapperById(long id);
-
     long getAllBookCount();
 
-    int addNewBook(Book book);
+    int addNewBook(BookWrapper bookWrapper);
 
-    List<BookWrapper> getAll();
+    List<Book> getAll();
 
-    List<BookWrapper> getAllBookInCurrentGenre(int genreId);
+    List<Book> getAllBookInCurrentGenre(int genreId);
 
-    List<BookWrapper> getAllAuthorBooks(int authorId);
+    List<Book> getAllAuthorBooks(int authorId);
 
     int deleteById(long id);
 }

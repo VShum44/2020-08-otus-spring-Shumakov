@@ -12,13 +12,12 @@ import java.util.*;
 @Service
 public class BookServiceImpl implements BookService {
 
-   private final BookWrapperService bookWrapperService;
    private final BookDao bookDao;
+   private final BookWrapperService bookWrapperService;
 
-    public BookServiceImpl(BookWrapperService bookWrapperService,
-                           BookDao bookDao) {
-        this.bookWrapperService = bookWrapperService;
+    public BookServiceImpl(BookDao bookDao, BookWrapperService bookWrapperService) {
         this.bookDao = bookDao;
+        this.bookWrapperService = bookWrapperService;
     }
 
 
@@ -28,54 +27,45 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookWrapper getBookWrapperById(long id){
-        Optional<Book> book = bookDao.getById(id);
-
-        BookWrapper bookWrapper = bookWrapperService.mapBookToWrapper(book.
-                orElseThrow( () -> new NoSuchElementException("Нет книги с таким id: " + id))
-        );
-
-        return bookWrapper;
-    }
-
-    @Override
     public long getAllBookCount() {
         return bookDao.count();
     }
 
     @Override
-    public int addNewBook(Book book) {
+    public int addNewBook(BookWrapper bookWrapper) {
+        Book book = bookWrapperService.mapBookWrapperToBook(bookWrapper);
+
         return bookDao.add(book);
     }
 
     @Override
-    public List<BookWrapper> getAll() {
+    public List<Book> getAll() {
 
         List<Book> books = bookDao.getAll();
 
         isDataEmpty(books);
 
-        return bookWrapperService.mapBooksToWrapperList(books);
+        return books;
     }
 
     @Override
-    public List<BookWrapper> getAllBookInCurrentGenre(int genreId) {
+    public List<Book> getAllBookInCurrentGenre(int genreId) {
 
         List<Book> books = bookDao.getAllBooksInCurrentGenre(genreId);
 
         isDataEmpty(books);
 
-        return bookWrapperService.mapBooksToWrapperList(books);
+        return books;
     }
 
     @Override
-    public List<BookWrapper> getAllAuthorBooks(int authorId) {
+    public List<Book> getAllAuthorBooks(int authorId) {
 
         List<Book> books = bookDao.getAllAuthorBooks(authorId);
 
         isDataEmpty(books);
 
-        return bookWrapperService.mapBooksToWrapperList(books);
+        return books;
     }
 
     @Override
