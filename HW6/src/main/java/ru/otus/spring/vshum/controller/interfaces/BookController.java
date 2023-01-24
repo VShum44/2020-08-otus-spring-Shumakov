@@ -1,5 +1,6 @@
 package ru.otus.spring.vshum.controller.interfaces;
 import ru.otus.spring.vshum.domain.Book;
+import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface BookController {
 
     String addBook(String title, int authorId, int genreId);
 
-    List<Book> getAllBooks();
+    List<BookWrapperToShow> getAllBooks();
 
     String deleteBook(long bookId);
 

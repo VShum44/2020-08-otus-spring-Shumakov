@@ -44,9 +44,9 @@ public class BookDaoJPA implements BookDao {
 
     @Override
     public List<Book> getAll() {
-        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_and_genre_graph");
-        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph",entityGraph);
+        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_genre_and_comments_graph");
+        TypedQuery<Book> query = em.createQuery("select b from Book b ", Book.class);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();
     }
 
@@ -59,7 +59,7 @@ public class BookDaoJPA implements BookDao {
 
     @Override
     public List<Book> getAllAuthorBooks(int authorId) {
-        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_and_genre_graph");
+        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_genre_and_comments_graph");
         TypedQuery<Book> query = em.createQuery("select b from Book b " +
                 "where b.author.id = :authorId", Book.class);
         query.setParameter("authorId", authorId);
@@ -69,7 +69,7 @@ public class BookDaoJPA implements BookDao {
 
     @Override
     public List<Book> getAllBooksInCurrentGenre(int genreId) {
-        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_and_genre_graph");
+        EntityGraph<?> entityGraph = em.getEntityGraph("book_author_genre_and_comments_graph");
         TypedQuery<Book> query = em.createQuery("select b from Book b " +
                 "where b.genre.id = :genreId", Book.class);
         query.setParameter("genreId", genreId);

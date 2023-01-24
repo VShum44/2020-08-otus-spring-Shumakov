@@ -9,8 +9,10 @@ import ru.otus.spring.vshum.service.interfaces.BookService;
 import ru.otus.spring.vshum.service.interfaces.BookWrapperService;
 import ru.otus.spring.vshum.service.interfaces.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -47,13 +49,22 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getAll() {
+    @Transactional
+    public List<BookWrapperToShow> getAll() {
 
         List<Book> books = bookDao.getAll();
 
         isDataEmpty(books);
 
-        return books;
+        List<BookWrapperToShow> bookWrapperToShowList = new ArrayList<>();
+
+        for (Book book : books) {
+            bookWrapperToShowList.add(
+                    bookWrapperService.createBookWrapperToShowFromBook(book)
+            );
+        }
+
+        return bookWrapperToShowList;
     }
 
     @Override

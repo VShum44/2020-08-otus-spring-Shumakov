@@ -1,11 +1,14 @@
 package ru.otus.spring.vshum.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
-@NamedEntityGraph(name = "book_author_and_genre_graph",
-        attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre")})
+@NamedEntityGraph(name = "book_author_genre_and_comments_graph",
+        attributeNodes = {@NamedAttributeNode("author"),
+                @NamedAttributeNode("genre"),
+                @NamedAttributeNode("bookComments")})
 public class Book {
 
     @Id
@@ -23,7 +26,19 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private List<BookComment> bookComments;
+
     public Book() {
+    }
+
+    public Book(long id, String title, Author author, Genre genre, List<BookComment> bookComments) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.bookComments = bookComments;
     }
 
     public Book(long id, String title, Author author, Genre genre) {
@@ -69,6 +84,14 @@ public class Book {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public List<BookComment> getComments() {
+        return bookComments;
+    }
+
+    public void setComments(List<BookComment> bookComments) {
+        this.bookComments = bookComments;
     }
 
     @Override

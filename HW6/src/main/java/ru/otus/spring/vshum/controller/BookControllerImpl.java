@@ -9,6 +9,7 @@ import ru.otus.spring.vshum.domain.Genre;
 import ru.otus.spring.vshum.service.BookServiceImpl;
 import ru.otus.spring.vshum.service.interfaces.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class BookControllerImpl implements BookController {
 
     @Override
     @ShellMethod(key = {"all-books", "all-b"}, value = "Get all books")
-    public List<Book> getAllBooks(){
+    public List<BookWrapperToShow> getAllBooks(){
         return bookService.getAll();
     }
 

@@ -2,6 +2,7 @@ package ru.otus.spring.vshum.service.interfaces;
 
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface BookService {
 
     int addNewBook(BookWrapper bookWrapper);
 
-    List<Book> getAll();
+    List<BookWrapperToShow> getAll();
 
     List<Book> getAllBookInCurrentGenre(int genreId);
 
