@@ -9,8 +9,12 @@ public interface BookCommentDao {
 
     Optional<BookComment> getById(long id);
 
-    BookComment addComment(BookComment comment);
+    BookComment save(BookComment comment);
 
     List<BookComment> getAllByBookId(long bookId);
+
+    void delete(BookComment comment);
+
+    void delete(long id);
 
 }

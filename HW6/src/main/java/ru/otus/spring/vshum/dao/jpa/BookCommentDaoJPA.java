@@ -7,6 +7,7 @@ import ru.otus.spring.vshum.domain.BookComment;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -24,7 +25,7 @@ public class BookCommentDaoJPA implements BookCommentDao {
     }
 
     @Override
-    public BookComment addComment(BookComment comment) {
+    public BookComment save(BookComment comment) {
         if(comment.getId() == 0){
             em.persist(comment);
             return comment;
@@ -34,9 +35,23 @@ public class BookCommentDaoJPA implements BookCommentDao {
 
     @Override
     public List<BookComment> getAllByBookId(long bookId) {
-        TypedQuery query = em.createQuery("select c from BookComment c " +
+        TypedQuery<BookComment> query = em.createQuery("select c from BookComment c " +
                 "where c.bookId = :bookId", BookComment.class);
         query.setParameter("bookId", bookId);
         return query.getResultList();
+    }
+
+    @Override
+    public void delete(BookComment comment) {
+        delete(comment.getId());
+    }
+
+    @Override
+    public void delete(long commentId){
+
+        BookComment comment = getById(commentId)
+                .orElseThrow( () -> new NoSuchElementException("Нет коментария с таким id: " + commentId));
+
+        em.remove(comment);
     }
 }

@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface BookService {
 
-    Book getOneById(long id);
+    BookWrapperToShow getOneById(long id);
 
     long getAllBookCount();
 
     int addNewBook(BookWrapper bookWrapper);
 
-    List<BookWrapperToShow> getAll();
+    List<Book> getAll();
 
     List<Book> getAllBookInCurrentGenre(int genreId);
 

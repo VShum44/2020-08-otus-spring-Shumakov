@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface BookController {
 
-    Book getBook(long id);
+    BookWrapperToShow getBook(long id);
 
     long getBooksCount();
 
     String addBook(String title, int authorId, int genreId);
 
-    List<BookWrapperToShow> getAllBooks();
+    List<Book> getAllBooks();
 
     String deleteBook(long bookId);
 

@@ -5,7 +5,6 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.controller.interfaces.BookController;
 import ru.otus.spring.vshum.domain.Book;
-import ru.otus.spring.vshum.domain.Genre;
 import ru.otus.spring.vshum.service.BookServiceImpl;
 import ru.otus.spring.vshum.service.interfaces.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
@@ -17,16 +16,14 @@ import java.util.List;
 public class BookControllerImpl implements BookController {
 
     private final BookServiceImpl bookService;
-    private final GenreService genreService;
 
-    public BookControllerImpl(BookServiceImpl bookService, GenreService genreService) {
+    public BookControllerImpl(BookServiceImpl bookService) {
         this.bookService = bookService;
-        this.genreService = genreService;
     }
 
     @Override
     @ShellMethod(key = {"get-book", "get-b","g-b"}, value = "Get book by id")
-    public Book getBook(long id){
+    public BookWrapperToShow getBook(long id){
         return bookService.getOneById(id);
     }
 
@@ -47,7 +44,7 @@ public class BookControllerImpl implements BookController {
 
     @Override
     @ShellMethod(key = {"all-books", "all-b"}, value = "Get all books")
-    public List<BookWrapperToShow> getAllBooks(){
+    public List<Book> getAllBooks(){
         return bookService.getAll();
     }
 

@@ -30,8 +30,10 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public Book getOneById(long id) {
-        return bookDao.getById(id).orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
+    @Transactional
+    public BookWrapperToShow getOneById(long id) {
+        Book book = bookDao.getById(id).orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
+        return bookWrapperService.createBookWrapperToShowFromBook(book);
     }
 
     @Override
@@ -49,22 +51,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
-    public List<BookWrapperToShow> getAll() {
+    public List<Book> getAll() {
 
         List<Book> books = bookDao.getAll();
 
         isDataEmpty(books);
 
-        List<BookWrapperToShow> bookWrapperToShowList = new ArrayList<>();
-
-        for (Book book : books) {
-            bookWrapperToShowList.add(
-                    bookWrapperService.createBookWrapperToShowFromBook(book)
-            );
-        }
-
-        return bookWrapperToShowList;
+        return books;
     }
 
     @Override

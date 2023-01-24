@@ -10,6 +10,10 @@ public interface BookCommentService {
 
     void addComment(BookComment bookComment);
 
+    void updateComment(BookComment bookComment);
+
     List<BookComment> findAllByBookId(long bookId);
+
+    void delete(long commentId);
 
 }

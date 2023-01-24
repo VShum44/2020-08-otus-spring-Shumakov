@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-public class BookCommentImpl implements BookCommentService {
+public class BookCommentServiceImpl implements BookCommentService {
 
     private final BookCommentDao bookCommentDao;
 
-    public BookCommentImpl(BookCommentDao bookCommentDao) {
+    public BookCommentServiceImpl(BookCommentDao bookCommentDao) {
         this.bookCommentDao = bookCommentDao;
     }
 
@@ -27,11 +27,24 @@ public class BookCommentImpl implements BookCommentService {
     @Override
     @Transactional
     public void addComment(BookComment comment) {
-        bookCommentDao.addComment(comment);
+        bookCommentDao.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public void updateComment(BookComment comment) {
+        bookCommentDao.save(comment);
     }
 
     @Override
     public List<BookComment> findAllByBookId(long bookId) {
         return bookCommentDao.getAllByBookId(bookId);
     }
+
+    @Override
+    @Transactional
+    public void delete(long commentId) {
+        bookCommentDao.delete(commentId);
+    }
+
 }
