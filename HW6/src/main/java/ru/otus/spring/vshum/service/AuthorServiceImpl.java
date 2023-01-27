@@ -5,6 +5,8 @@ import ru.otus.spring.vshum.dao.interfaces.AuthorDao;
 import ru.otus.spring.vshum.domain.Author;
 import ru.otus.spring.vshum.service.interfaces.AuthorService;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class AuthorServiceImpl implements AuthorService {
 
@@ -16,6 +18,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author getOneById(int id) {
-        return authorDao.getById(id);
+        return authorDao.getById(id)
+                .orElseThrow(() -> new NoSuchElementException("Нет автора с таким id: " + id));
     }
 }

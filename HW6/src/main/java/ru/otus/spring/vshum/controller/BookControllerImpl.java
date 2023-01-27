@@ -6,7 +6,6 @@ import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.controller.interfaces.BookController;
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.service.BookServiceImpl;
-import ru.otus.spring.vshum.service.interfaces.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
@@ -24,7 +23,7 @@ public class BookControllerImpl implements BookController {
     @Override
     @ShellMethod(key = {"get-book", "get-b","g-b"}, value = "Get book by id")
     public BookWrapperToShow getBook(long id){
-        return bookService.getOneById(id);
+        return bookService.showBook(id);
     }
 
     @Override

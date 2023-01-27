@@ -4,11 +4,11 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.vshum.domain.BookComment;
 import ru.otus.spring.vshum.service.interfaces.BookCommentService;
+import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 @ShellComponent
 public class BookCommentController {
@@ -26,7 +26,7 @@ public class BookCommentController {
 
     @ShellMethod(key = {"add-comment", "add-com"}, value = "Add comment to book")
     public void addComment(String text, long bookId){
-        bookCommentService.addComment(new BookComment(text, bookId));
+        bookCommentService.addComment(new BookCommentWrapper(text, bookId));
     }
 
     @ShellMethod(key = {"del-comment", "del-com"}, value = "Delete comment")
@@ -44,6 +44,11 @@ public class BookCommentController {
         System.out.println("Введите изменения:");
         String commentText = reader.readLine();
         bookComment.setText(commentText);
-        bookCommentService.addComment(bookComment);
+        bookCommentService.updateComment(bookComment);
+    }
+
+    @ShellMethod(key = {"all-by-book", "all-b-b"}, value = "Get all comments by book")
+    public String getAllByBook(long bookId){
+        return bookCommentService.findAllByBookId(bookId).toString();
     }
 }

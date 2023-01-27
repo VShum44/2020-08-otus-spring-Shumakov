@@ -1,14 +1,14 @@
 package ru.otus.spring.vshum.domain;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "books")
-@NamedEntityGraph(name = "book_author_genre_and_comments_graph",
-        attributeNodes = {@NamedAttributeNode("author"),
-                @NamedAttributeNode("genre"),
-                @NamedAttributeNode("bookComments")})
 public class Book {
 
     @Id
@@ -26,8 +26,9 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id")
+    @Fetch(FetchMode.JOIN)
+    @BatchSize(size = 10)
+    @OneToMany(mappedBy = "book",orphanRemoval = true)
     private List<BookComment> bookComments;
 
     public Book() {

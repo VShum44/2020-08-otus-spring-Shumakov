@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface BookService {
 
-    BookWrapperToShow getOneById(long id);
+    BookWrapperToShow showBook(long id);
+
+    Book getOneById(long id);
 
     long getAllBookCount();
 

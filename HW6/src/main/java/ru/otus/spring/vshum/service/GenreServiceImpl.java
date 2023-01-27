@@ -5,6 +5,8 @@ import ru.otus.spring.vshum.dao.interfaces.GenreDao;
 import ru.otus.spring.vshum.domain.Genre;
 import ru.otus.spring.vshum.service.interfaces.GenreService;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class GenreServiceImpl implements GenreService {
 
@@ -16,6 +18,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre getOneById(int id) {
-        return genreDao.getById(id);
+        return genreDao.getById(id)
+                .orElseThrow(() -> new NoSuchElementException("Нет жанра с таким id: " + id));
     }
 }

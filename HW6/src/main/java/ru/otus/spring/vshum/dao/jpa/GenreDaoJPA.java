@@ -20,9 +20,8 @@ public class GenreDaoJPA implements GenreDao {
     }
 
     @Override
-    public Genre getById(int id) {
+    public Optional<Genre> getById(int id) {
         return Optional
-                .ofNullable(entityManager.find(Genre.class, id))
-                .orElseThrow(() -> new NoSuchElementException("Нет жанра с таким id: " + id));
+                .ofNullable(entityManager.find(Genre.class, id));
     }
 }

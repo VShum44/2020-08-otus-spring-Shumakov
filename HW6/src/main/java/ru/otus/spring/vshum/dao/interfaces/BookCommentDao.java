@@ -11,8 +11,6 @@ public interface BookCommentDao {
 
     BookComment save(BookComment comment);
 
-    List<BookComment> getAllByBookId(long bookId);
-
     void delete(BookComment comment);
 
     void delete(long id);

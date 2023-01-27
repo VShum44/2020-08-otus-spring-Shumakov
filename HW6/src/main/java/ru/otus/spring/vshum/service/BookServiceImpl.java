@@ -31,9 +31,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookWrapperToShow getOneById(long id) {
-        Book book = bookDao.getById(id).orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
+    public BookWrapperToShow showBook(long id){
+        Book book = getOneById(id);
         return bookWrapperService.createBookWrapperToShowFromBook(book);
+    }
+
+    @Override
+    @Transactional
+    public Book getOneById(long id) {
+        return bookDao.getById(id)
+                .orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
     }
 
     @Override

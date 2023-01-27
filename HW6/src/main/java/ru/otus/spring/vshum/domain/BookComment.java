@@ -13,21 +13,22 @@ public class BookComment {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "book_id")
-    private long bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     public BookComment() {
     }
 
-    public BookComment(String text, long bookId) {
+    public BookComment(String text, Book book) {
         this.text = text;
-        this.bookId = bookId;
+        this.book = book;
     }
 
-    public BookComment(long id, String text, long bookId) {
+    public BookComment(long id, String text, Book book) {
         this.id = id;
         this.text = text;
-        this.bookId = bookId;
+        this.book = book;
     }
 
     public long getId() {
@@ -46,7 +47,18 @@ public class BookComment {
         this.text = text;
     }
 
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    @Override
+    public String toString() {
+        return "BookComment{" +
+                "id=" + id +
+                ", text='" + text + '\'';
     }
 }
