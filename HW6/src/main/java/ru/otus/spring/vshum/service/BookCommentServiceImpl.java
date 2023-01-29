@@ -1,6 +1,7 @@
 package ru.otus.spring.vshum.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.vshum.dao.interfaces.BookCommentDao;
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.domain.BookComment;
@@ -9,7 +10,6 @@ import ru.otus.spring.vshum.service.interfaces.BookCommentWrapperService;
 import ru.otus.spring.vshum.service.interfaces.BookService;
 import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -48,12 +48,17 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BookComment> findAllByBookId(long bookId) {
         Book book = bookService.getOneById(bookId);
         List<BookComment> bookComments = new ArrayList<>(book.getComments());
-        if(!bookComments.isEmpty()) return bookComments;
-        else throw new NoSuchElementException(String.format("У книги с id: %s нет комментариев"));
+
+        if(bookComments.isEmpty()){
+            throw new NoSuchElementException(String.format("У книги с id: %s нет комментариев", bookId));
+        }
+        else {
+            return bookComments;
+        }
     }
 
     @Override

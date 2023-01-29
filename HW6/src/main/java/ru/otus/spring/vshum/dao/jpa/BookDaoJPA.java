@@ -1,6 +1,7 @@
 package ru.otus.spring.vshum.dao.jpa;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.dao.interfaces.BookDao;
 import ru.otus.spring.vshum.domain.Book;
 
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -47,9 +49,11 @@ public class BookDaoJPA implements BookDao {
 
     @Override
     public int deleteById(long id) {
-        Query query = em.createQuery("delete from Book b where b.id = :id ");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+        Book book = getById(id)
+                .orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
+        em.remove(book);
+
+        return AppConst.SUCCESS;
     }
 
     @Override

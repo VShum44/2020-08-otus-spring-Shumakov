@@ -42,7 +42,7 @@ public class BookCommentDaoJPA implements BookCommentDao {
     public void delete(long commentId){
 
         BookComment comment = getById(commentId)
-                .orElseThrow( () -> new NoSuchElementException("Нет коментария с таким id: " + commentId));
+                .orElseThrow( () -> new NoSuchElementException("Нет комментария с таким id: " + commentId));
 
         em.remove(comment);
     }
