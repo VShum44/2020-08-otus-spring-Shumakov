@@ -8,14 +8,13 @@
         <version>2.7.4</version>
         <relativePath/>
     </parent>
-    <groupId>ru.otus.vshum</groupId>
+
     <artifactId>HW3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>HW3</name>
-    <description>HW3</description>
+
     <properties>
         <java.version>11</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
