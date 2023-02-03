@@ -1,13 +1,12 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.domain.BookComment;
 import ru.otus.spring.vshum.repository.BookCommentRepository;
-import ru.otus.spring.vshum.service.interfaces.BookCommentService;
-import ru.otus.spring.vshum.service.interfaces.BookCommentWrapperService;
-import ru.otus.spring.vshum.service.interfaces.BookService;
+import ru.otus.spring.vshum.service.BookCommentService;
+import ru.otus.spring.vshum.service.BookCommentWrapperService;
+import ru.otus.spring.vshum.service.BookService;
 import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
 
 import java.util.ArrayList;
@@ -36,20 +35,17 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    @Transactional
     public void addComment(BookCommentWrapper commentWrapper) {
         BookComment comment = bookCommentWrapperService.createBookCommentFromBookCommentWrapper(commentWrapper);
         repository.save(comment);
     }
 
     @Override
-    @Transactional
     public void updateComment(BookComment comment) {
         repository.save(comment);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<BookComment> findAllByBookId(long bookId) {
         Book book = bookService.getOneById(bookId);
         List<BookComment> bookComments = new ArrayList<>(book.getComments());
@@ -63,7 +59,6 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    @Transactional
     public void delete(long commentId) {
         repository.deleteById(commentId);
     }

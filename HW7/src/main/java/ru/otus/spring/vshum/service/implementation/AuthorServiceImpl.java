@@ -1,9 +1,9 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.vshum.domain.Author;
 import ru.otus.spring.vshum.repository.AuthorRepository;
-import ru.otus.spring.vshum.service.interfaces.AuthorService;
+import ru.otus.spring.vshum.service.AuthorService;
 
 import java.util.NoSuchElementException;
 

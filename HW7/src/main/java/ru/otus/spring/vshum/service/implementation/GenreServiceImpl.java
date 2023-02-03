@@ -1,9 +1,9 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.vshum.domain.Genre;
 import ru.otus.spring.vshum.repository.GenreRepository;
-import ru.otus.spring.vshum.service.interfaces.GenreService;
+import ru.otus.spring.vshum.service.GenreService;
 
 import java.util.NoSuchElementException;
 

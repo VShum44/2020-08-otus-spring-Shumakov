@@ -5,7 +5,7 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.controller.interfaces.BookController;
 import ru.otus.spring.vshum.domain.Book;
-import ru.otus.spring.vshum.service.BookServiceImpl;
+import ru.otus.spring.vshum.service.implementation.BookServiceImpl;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 

@@ -1,10 +1,10 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.domain.BookComment;
-import ru.otus.spring.vshum.service.interfaces.BookCommentWrapperService;
-import ru.otus.spring.vshum.service.interfaces.BookService;
+import ru.otus.spring.vshum.service.BookCommentWrapperService;
+import ru.otus.spring.vshum.service.BookService;
 import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
 
 @Service

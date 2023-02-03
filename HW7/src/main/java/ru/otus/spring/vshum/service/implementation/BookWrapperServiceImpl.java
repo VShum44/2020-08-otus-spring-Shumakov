@@ -1,10 +1,10 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.vshum.domain.Book;
-import ru.otus.spring.vshum.service.interfaces.AuthorService;
-import ru.otus.spring.vshum.service.interfaces.BookWrapperService;
-import ru.otus.spring.vshum.service.interfaces.GenreService;
+import ru.otus.spring.vshum.service.AuthorService;
+import ru.otus.spring.vshum.service.BookWrapperService;
+import ru.otus.spring.vshum.service.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 

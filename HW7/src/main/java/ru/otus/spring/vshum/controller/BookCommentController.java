@@ -3,7 +3,7 @@ package ru.otus.spring.vshum.controller;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.vshum.domain.BookComment;
-import ru.otus.spring.vshum.service.interfaces.BookCommentService;
+import ru.otus.spring.vshum.service.BookCommentService;
 import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
 
 import java.io.BufferedReader;

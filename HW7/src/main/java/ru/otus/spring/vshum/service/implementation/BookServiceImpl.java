@@ -1,4 +1,4 @@
-package ru.otus.spring.vshum.service;
+package ru.otus.spring.vshum.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.vshum.constant.AppConst;
@@ -6,14 +6,13 @@ import ru.otus.spring.vshum.domain.Author;
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.domain.Genre;
 import ru.otus.spring.vshum.repository.BookRepository;
-import ru.otus.spring.vshum.service.interfaces.AuthorService;
-import ru.otus.spring.vshum.service.interfaces.BookService;
-import ru.otus.spring.vshum.service.interfaces.BookWrapperService;
-import ru.otus.spring.vshum.service.interfaces.GenreService;
+import ru.otus.spring.vshum.service.AuthorService;
+import ru.otus.spring.vshum.service.BookService;
+import ru.otus.spring.vshum.service.BookWrapperService;
+import ru.otus.spring.vshum.service.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -37,14 +36,12 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    @Transactional
     public BookWrapperToShow showBook(long id){
         Book book = getOneById(id);
         return bookWrapperService.createBookWrapperToShowFromBook(book);
     }
 
     @Override
-    @Transactional
     public Book getOneById(long id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Нет книги с таким id: " + id));
@@ -56,7 +53,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public int addNewBook(BookWrapper bookWrapper) {
 
         Book book = bookWrapperService.mapBookWrapperToBook(bookWrapper);
@@ -99,7 +95,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteById(long id) {
          bookRepository.deleteById(id);
     }
