@@ -2,6 +2,7 @@ package ru.otus.spring.vshum.service;
 
 import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperFromForm;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface BookService {
     long getAllBookCount();
 
     int addNewBook(BookWrapper bookWrapper);
+
+    void updateBook(BookWrapperFromForm bookWrapper);
 
     List<Book> getAll();
 

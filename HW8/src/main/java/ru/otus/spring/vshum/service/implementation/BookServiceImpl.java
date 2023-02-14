@@ -11,6 +11,7 @@ import ru.otus.spring.vshum.service.BookService;
 import ru.otus.spring.vshum.service.BookWrapperService;
 import ru.otus.spring.vshum.service.GenreService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperFromForm;
 import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
@@ -58,6 +59,14 @@ public class BookServiceImpl implements BookService {
         Book book = bookWrapperService.mapBookWrapperToBook(bookWrapper);
         if(bookRepository.save(book) != null) return AppConst.SUCCESS;
         else return AppConst.FAIL;
+    }
+
+    @Override
+    public void updateBook(BookWrapperFromForm bookWrapper) {
+        Book bookToEdit = bookRepository.findById(bookWrapper.getId())
+                .orElseThrow(() -> new NoSuchElementException("Нет книги с таким id:" + bookWrapper.getId()));
+        bookToEdit.setTitle(bookWrapper.getTitle());
+        bookRepository.save(bookToEdit);
     }
 
     @Override
