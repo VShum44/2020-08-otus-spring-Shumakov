@@ -11,8 +11,10 @@ import java.sql.SQLException;
 public class ApplicationStarter {
     public static void main(String[] args) throws SQLException {
 
-        Console.main(args);
+//        Console.main(args);
         ApplicationContext context = SpringApplication.run(ApplicationStarter.class);
+        System.out.printf("Адрес приложения: %n%s%n%s%n",
+                "http://localhost:8189/library/", "http://localhost:8189/library/book/edit?id=1");
 
     }
 }

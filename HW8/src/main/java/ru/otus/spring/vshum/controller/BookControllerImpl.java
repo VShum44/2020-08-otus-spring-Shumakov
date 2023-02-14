@@ -1,28 +1,47 @@
 package ru.otus.spring.vshum.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring.vshum.constant.AppConst;
 import ru.otus.spring.vshum.domain.Book;
-import ru.otus.spring.vshum.service.implementation.BookServiceImpl;
+import ru.otus.spring.vshum.service.BookService;
 import ru.otus.spring.vshum.wrapper.BookWrapper;
+import ru.otus.spring.vshum.wrapper.BookWrapperFromForm;
 
 import java.util.List;
 
 @Controller
 public class BookControllerImpl {
 
-    private final BookServiceImpl bookService;
+    private final BookService bookService;
 
-    public BookControllerImpl(BookServiceImpl bookService) {
+    public BookControllerImpl(BookService bookService) {
         this.bookService = bookService;
     }
 
     @GetMapping(path = "/book/{id}")
-    public String getBook(@PathVariable long id){
+    public String getBook(@PathVariable long id, Model model){
+        Book book = bookService.getOneById(id);
+        model.addAttribute("book", book);
+        return "card_book";
+    }
 
-        return bookService.showBook(id).toString();
+    @GetMapping(path = "/book/edit")
+    public String editBook(@RequestParam("id") long id, Model model){
+        Book book = bookService.getOneById(id);
+        model.addAttribute("book", book);
+        return "edit";
+    }
+
+    @PostMapping(path = "/book/edit")
+    public String editBook(BookWrapperFromForm bookWrapper){
+        System.out.println("PostEdit");
+        bookService.updateBook(bookWrapper);
+        return "redirect:/";
     }
 
     public long getBooksCount(){
@@ -37,9 +56,11 @@ public class BookControllerImpl {
                 : String.format("Something went wrong, book \"%s\" wasn't added", title);
     }
 
-
-    public List<Book> getAllBooks(){
-        return bookService.getAll();
+    @GetMapping(path = "/")
+    public String getAllBooks(Model model){
+        List<Book> books = bookService.getAll();
+        model.addAttribute("books", books);
+        return "list";
     }
 
 
