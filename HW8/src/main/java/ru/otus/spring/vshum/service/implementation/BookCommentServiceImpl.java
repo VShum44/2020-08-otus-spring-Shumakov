@@ -7,7 +7,7 @@ import ru.otus.spring.vshum.repository.BookCommentRepository;
 import ru.otus.spring.vshum.service.BookCommentService;
 import ru.otus.spring.vshum.service.BookCommentWrapperService;
 import ru.otus.spring.vshum.service.BookService;
-import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
+import ru.otus.spring.vshum.wrapper.comment.BookCommentWrapper;
 
 import java.util.ArrayList;
 import java.util.List;

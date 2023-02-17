@@ -26,27 +26,27 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" action="edit.html" th:action="@{/book/edit}" th:method="POST">
-    <h3>Book Info:</h3>
+<form id="edit-form" action="edit.html" th:action="@{/book/edit}" th:object="${book}" th:method="POST">
+    <h3>Book Editor:</h3>
 
     <div class="row">
         <label for="id-input">ID:</label>
-        <input id="id-input" name="id" type="text" readonly="readonly" value="1" th:value="${book.id}"/>
+        <input id="id-input" name="id" type="text" readonly="readonly" value="1" th:value="*{id}"/>
     </div>
 
     <div class="row">
         <label for="book-title-input">Title:</label>
-        <input id="book-title-input" name="title" type="text" value="White fang" th:value="${book.title}"/>
+        <input id="book-title-input" name="title" type="text" value="White fang" th:value="*{title}"/>
     </div>
 
     <div class="row">
-        <label for="book-author-input">Author:</label>
-        <input id="book-author-input" name="author" type="text" value="J.London" th:value="${book.author.name}"/>
+        <label for="book-author-input">Author id:</label>
+        <input id="book-author-input" name="author" readonly="readonly" type="text" value="J.London" th:value="*{author.id}" th:text="*{author.name + ' ' + author.surname}"/>
     </div>
 
     <div class="row">
-        <label for="book-genre-input">Genre:</label>
-        <input id="book-genre-input" name="genre" type="text" value="Adventure" th:value="${book.genre.title}"/>
+        <label for="book-genre-input">Genre id:</label>
+        <input id="book-genre-input" name="genre" readonly="readonly" type="text" value="Adventure" th:value="*{genre.id}" th:text="*{genre.title}"/>
     </div>
 
     <div class="row">

@@ -1,12 +1,9 @@
 package ru.otus.spring.vshum.controller.interfaces;
 import ru.otus.spring.vshum.domain.Book;
-import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
 
 import java.util.List;
 
 public interface BookController {
-
-    BookWrapperToShow getBook(long id);
 
     long getBooksCount();
 
