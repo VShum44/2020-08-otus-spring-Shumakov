@@ -5,6 +5,7 @@ import ru.otus.spring.vshum.domain.Author;
 import ru.otus.spring.vshum.repository.AuthorRepository;
 import ru.otus.spring.vshum.service.AuthorService;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,4 +22,11 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Нет автора с таким id: " + id));
     }
+
+    @Override
+    public List<Author> getAll() {
+        return authorRepository.findAll();
+    }
+
+
 }

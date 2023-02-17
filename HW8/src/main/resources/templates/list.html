@@ -27,6 +27,10 @@
 <body>
 <h3>Books:</h3>
 
+
+<div class="row">
+    <a href="add_new_book.html" th:href="@{/book/add}" th:method="GET"><button type="button">Add new Book</button></a>
+</div>
 <table class="books">
     <thead>
     <tr>
@@ -45,6 +49,11 @@
         <td th:text="${book.genre.title}">Adventure</td>
         <td>
             <a href="edit.html" th:href="@{/book/edit(id=*{id})}">Edit</a>
+            <form action="#" th:action="@{/book/delete/__*{id}__}" th:method="DELETE" >
+                <button type="submit" class="btn">
+                    Delete
+                </button>
+            </form>
         </td>
     </tr>
     </tbody>

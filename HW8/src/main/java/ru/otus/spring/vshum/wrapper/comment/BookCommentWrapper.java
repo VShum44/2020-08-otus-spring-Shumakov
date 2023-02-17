@@ -1,4 +1,4 @@
-package ru.otus.spring.vshum.wrapper;
+package ru.otus.spring.vshum.wrapper.comment;
 
 public class BookCommentWrapper {
 

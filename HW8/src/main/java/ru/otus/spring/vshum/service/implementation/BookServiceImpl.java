@@ -10,9 +10,7 @@ import ru.otus.spring.vshum.service.AuthorService;
 import ru.otus.spring.vshum.service.BookService;
 import ru.otus.spring.vshum.service.BookWrapperService;
 import ru.otus.spring.vshum.service.GenreService;
-import ru.otus.spring.vshum.wrapper.BookWrapper;
-import ru.otus.spring.vshum.wrapper.BookWrapperFromForm;
-import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
+import ru.otus.spring.vshum.wrapper.book.BookWrapper;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,13 +33,6 @@ public class BookServiceImpl implements BookService {
         this.bookWrapperService = bookWrapperService;
     }
 
-
-    @Override
-    public BookWrapperToShow showBook(long id){
-        Book book = getOneById(id);
-        return bookWrapperService.createBookWrapperToShowFromBook(book);
-    }
-
     @Override
     public Book getOneById(long id) {
         return bookRepository.findById(id)
@@ -61,8 +52,9 @@ public class BookServiceImpl implements BookService {
         else return AppConst.FAIL;
     }
 
+    //В книге разрешено менять только название
     @Override
-    public void updateBook(BookWrapperFromForm bookWrapper) {
+    public void updateBook(BookWrapper bookWrapper) {
         Book bookToEdit = bookRepository.findById(bookWrapper.getId())
                 .orElseThrow(() -> new NoSuchElementException("Нет книги с таким id:" + bookWrapper.getId()));
         bookToEdit.setTitle(bookWrapper.getTitle());

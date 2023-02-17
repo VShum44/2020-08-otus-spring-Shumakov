@@ -5,7 +5,7 @@ import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.domain.BookComment;
 import ru.otus.spring.vshum.service.BookCommentWrapperService;
 import ru.otus.spring.vshum.service.BookService;
-import ru.otus.spring.vshum.wrapper.BookCommentWrapper;
+import ru.otus.spring.vshum.wrapper.comment.BookCommentWrapper;
 
 @Service
 public class BookCommentWrapperServiceImpl implements BookCommentWrapperService {

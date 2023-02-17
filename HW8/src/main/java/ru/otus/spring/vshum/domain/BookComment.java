@@ -25,12 +25,6 @@ public class BookComment {
         this.book = book;
     }
 
-    public BookComment(long id, String text, Book book) {
-        this.id = id;
-        this.text = text;
-        this.book = book;
-    }
-
     public long getId() {
         return id;
     }

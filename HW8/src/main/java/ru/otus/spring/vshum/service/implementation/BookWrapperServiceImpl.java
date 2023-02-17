@@ -5,10 +5,7 @@ import ru.otus.spring.vshum.domain.Book;
 import ru.otus.spring.vshum.service.AuthorService;
 import ru.otus.spring.vshum.service.BookWrapperService;
 import ru.otus.spring.vshum.service.GenreService;
-import ru.otus.spring.vshum.wrapper.BookWrapper;
-import ru.otus.spring.vshum.wrapper.BookWrapperToShow;
-
-import java.util.ArrayList;
+import ru.otus.spring.vshum.wrapper.book.BookWrapper;
 
 @Service
 public class BookWrapperServiceImpl implements BookWrapperService {
@@ -27,18 +24,8 @@ public class BookWrapperServiceImpl implements BookWrapperService {
 
         return new Book(
                 bookWrapper.getTitle(),
-                authorService.getOneById(bookWrapper.getAuthorId()),
-                genreService.getOneById(bookWrapper.getGenreId())
-        );
-    }
-
-    @Override
-    public BookWrapperToShow createBookWrapperToShowFromBook(Book book) {
-        return new BookWrapperToShow(
-                book.getTitle(),
-                book.getAuthor().getName() + " " + book.getAuthor().getSurname(),
-                book.getGenre().getTitle(),
-                new ArrayList<>(book.getComments())
+                authorService.getOneById(bookWrapper.getAuthor().getId()),
+                genreService.getOneById(bookWrapper.getGenre().getId())
         );
     }
 }

@@ -38,15 +38,11 @@
     <thead>
     <tr>
         <th>Text</th>
-        <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="comment : ${book.comments}" th:object="${comment}">
         <td th:text="*{text}">White fang</td>
-        <td>
-            <a href="edit.html" th:href="@{/book/edit(id=*{id})}">Edit</a>
-        </td>
     </tr>
     </tbody>
 </table>
